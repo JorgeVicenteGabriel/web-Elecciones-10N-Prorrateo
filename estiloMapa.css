@@ -1,0 +1,54 @@
+body {
+  /*text-align: center;*/
+}
+body > * {
+  margin: auto;
+}
+th {
+  text-align: left;
+  width: 25%;
+}
+.thancho {
+  min-width: 200px;
+}
+td {
+  text-align: left;
+}
+.tooltip-donut {
+  position: absolute;
+  text-align: center;
+  padding: 0.5rem;
+  background: #ffffff;
+  color: #313639;
+  border: 1px solid #313639;
+  border-radius: 8px;
+  pointer-events: none;
+  font-size: 1.3rem;
+}
+.Intro {
+  font-family: Helvetica, sans-serif;
+  font-weight: 200;
+  width: 1200px;
+  text-anchor: middle;
+}
+.barra {
+  fill: #824928;
+}
+*/ .barra:hover {
+  fill: orangered;
+  stroke: orange;
+}
+
+.etiqueta {
+  fill: #999;
+  font: 12px sans-serif;
+  text-anchor: middle;
+  font-weight: 200;
+}
+
+.etiqueta_valor {
+  fill: white;
+  font: 12px sans-serif;
+  text-anchor: middle;
+  font-weight: 400;
+}

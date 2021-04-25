@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <script src="script.js"></script>
   <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <title>Visualización de Datos</title>
+  <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/1.9.2/d3plus.full.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/topojson-client@3"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+  <link rel="stylesheet" type="text/css" href="estiloMapa.css">
+  <meta http-equiv="content-type" content="application/json; charset=UTF-8">
 </head>
 
 <body>
@@ -13,67 +23,316 @@
   <div style="display: flex; justify-content:center;">
     <p><b>Elecciones del 10 N del 2019 sobre el prorrateo en el reparto de escaños</b></p>
   </div>
-  <div style="display: flex; justify-content:center; flex-direction:column; margin:10px;">
-    Alumno: Jorge Vicente Gabriel
-    <div>
-      Url: <a href="https://web-platform-xo35as.stackblitz.io">https://web-platform-xo35as.stackblitz.io</a><br>
-    </div>
-    <div>
-      Github: <a
-        href="https://github.com/JorgeVicenteGabriel/web-platform-hibdce">https://github.com/JorgeVicenteGabriel/web-platform-hibdce</a>
+
+
+
+
+  <div style="width:100%; display: flex; display: flex; justify-content: center; align-items: center">
+    <div style=" width: 1000px; margin:0;">
+      <div style="display: flex; justify-content:center; flex-direction:column; margin:0px;">
+        Alumno: Jorge Vicente Gabriel
+        <div>
+          Url: <a href="https://web-platform-xo35as.stackblitz.io">https://web-platform-xo35as.stackblitz.io</a><br>
+        </div>
+        <div>
+          Github: <a
+            href="https://github.com/JorgeVicenteGabriel/web-Elecciones-10N-Prorrateo">https://github.com/JorgeVicenteGabriel/web-Elecciones-10N-Prorrateo</a>
+        </div>
+      </div>
+
+      <h2>Introducción</h2>
+      <p style="text-align: justify;">
+        Un buen análisis visual permite aplicar diferentes técnicas de visualización que se implementan en las máquinas
+        para que se pueda interpretar los datos. En concreto una visualización se puede utilizar para transformar datos
+        en información. Esta información será captada por los sentidos por lo que entran en juego las capacidades
+        cognitivas para poder interpretar esa información.
+      </p>
+      <p style="text-align: justify;">
+        Una de las piezas clave para una buena visualización es la interpretación clara de los datos, es decir, poder
+        mostrarlos de manera sencilla. Por eso surge la necesidad de procesar los datos a través del insight. Un
+        concepto que se basa en la extracción adicional de los datos que de por sí solo no se muestran. Se debe de
+        conseguir convertir esos datos en información valiosa para el usuario. Esa conversión es en lo que se basa está
+        práctica con la utilización de técnicas de visualización.
+      </p>
+      <p style="text-align: justify;">
+        Por otro lado, se debe de recordar que en la visualización se encuentra tres grandes pirales, el ojo de
+        cerradura, vista global y estrategia de navegación. El problema del ojo de cerradura se basa en no saber dónde
+        se encuentra ubicado el usuario en la visualización, por donde ir o como ir. La vista global trata datos que
+        necesitan un accesos directos o iteraciones para que pueda mover el usuario en el conjunto de datos.
+      </p>
+      <h2>Contexto</h2>
+      <p style="text-align: justify;">
+        En concreto se va a realizar una visualización basada en las elecciones del 10 de noviembre del 2019 en España.
+        El principal objetivo es mejorar la información que se muestra en este tipo de datos para poder entender de
+        manera clara los resultados que se obtuvieron. Muchas veces por falta de tiempo o por desconocimiento, no se
+        sabe el funcionamiento del reparto de escaños en nuestro país. Uno de los pilares fundamentales de la democracia
+        ya que a partir de ahí se forma el gobierno que va a dirigir el país. El modelo que sigue España para la
+        asignación de votos y escaños se basa en el modelo de circunscripciones provinciales basada en la Ley d´Hondt.
+        No se basa en el modelo de población única en el que cada voto cuenta por igual para que no haya
+        infrarrepresentación de las zonas rurales. Nuestro sistema electoral tiene dos sesgos bien diferenciados, el
+        mayoritario llevado por la magnitud de distrito y el conservador llevado por el prorrateo y la varianza de
+        escaños.
+      </p>
+      <p style="text-align: justify;">
+        La Ley Orgánica del Régimen Electoral General (LOREG), aprobada en 1985 bajo el mandato de Felipe González,
+        establece que el congreso tendrá 350 diputados. Los escaños se reparten en base a la división de España en 52
+        circunscripciones contando con las ciudades autónomas de Ceuta y Melilla. Pero está ley trae consigo un
+        desajuste entre el número de escaños y la población que lo integra. Este fenómeno se llama desviación del
+        prorrateo. Se tiene un mínimo de dos escaños por provincia, excepto Ceuta y Melilla que tienen 1. Los escaños
+        fijos son 102 y 248 son los escaños que varían con la población de los distritos. Esto causa que en España se
+        tenga la mayor desviación en el prorrateo de Europa con la excepción de Islandia.
+      </p>
+      <h2>Elementos de la visualización</h2>
+      <p style="text-align: justify;">
+        Una vez introducido los conceptos básicos del sistema de reparto de escaños se habla sobre los elementos que
+        compone la visualización. Lo primero de todo es plantear lo que queremos transmitir. Se debe de considerar el
+        objetivo que es dar una mayor visibilidad del peso del voto del ciudadano español. La audiencia va dirigida a
+        todos los ciudadanos españoles, personas que estén interesadas en el tema y por supuesto enfocado a las personas
+        que evalúen este trabajo. El canal utilizado es este informe ayudado con diferentes visualizaciones para pasar
+        esos datos a información y posteriormente a conocimiento.
+      </p>
+      <p style="text-align: justify;">
+        Las visualizaciones que se van a realizar será un mapa y un gráfico de sectores a través de la herramienta D3 y
+        diferentes gráficos con la herramienta Tableu que alivie las carencias de los anteriores gráficos. En las
+        siguientes secciones se entra más en detalle de la elección de las herramientas y los gráficos.
+      </p>
+      <h2>Base de datos con la que se trabaja</h2>
+      <p style="text-align: justify;">
+        Para desarrollar el trabajo se han utilizado dos conjuntos de datos. Uno de ellos es el GeoJson que representa
+        las coordenadas del mapa de España en formato Json. Este tipo de formato es muy utilizado para crear
+        visualizaciones con mapas. El otro conjunto de datos representa los resultados a nivel de provincia de las
+        elecciones del 10 de noviembre, también en formato Json. Se obtuvieron de la página del periódico digital El
+        País los cuales estaban en formato XML.
+      </p>
+      <p style="text-align: justify;">
+        En primer lugar, el descargarse en formato XML, se tuvo que utilizar un conversor para transformar esa
+        información de formato XML a formato Json. Una vez transformado los datos se tuvo que juntar los diferentes
+        ficheros resultantes de cada provincia en uno solo y agregar un identificador. El identificador es un campo que
+        también tiene el conjunto de datos del mapa para poder identificar la información de cada provincia. No se pudo
+        utilizar el nombre como identificador ya que había diferencia entre los dos conjuntos por el uso de gallego, el
+        catalán, el vasco y el valenciano. El conjunto de datos resultante se subió a GitHub en el siguiente link: <a
+          href="https://github.com/JorgeVicenteGabriel/visualizacionMSI">https://github.com/JorgeVicenteGabriel/visualizacionMSI</a>
+      </p>
+      <p style="text-align: justify;">
+        El conjunto GeoJson fue utilizado para construir el mapa con la herramienta D3 y el otro conjunto se utilizó
+        como contenido de las elecciones en las dos herramientas de la actividad.
+      </p>
+      <h2>Desarrollo en D3</h2>
+      <p style="text-align: justify;">
+        La librería D3 es una herramienta muy potente para hacer visualizaciones iterativas en Java-Script. Uno de los
+        inconvenientes de su uso es una curva de aprendizaje muy elevada, pero el veneficio que aporta supera el
+        esfuerzo en adaptarse a la herramienta.
+      </p>
+      <p style="text-align: justify;">
+        La primera visualización que se presenta es un mapa coroplético donde se muestra por colores las provincias
+        donde ha ganado un partido en concreto. La visualización se diseña en dos dimensiones donde muestra una vista
+        completa del contenido y un enfoque donde muestra datos concretos de la zona geográfica. En esta interacción
+        entra en juego dos elementos el brushing que resalta los datos de esa zona y el linking que enlaza con un
+        diagrama de sectores donde muestra los partidos votados de esa provincia. Para realizar la iteración se debe de
+        usar el ratón para que se muestre la información.
+      </p>
+      <p style="text-align: justify;">
+        La segunda visualización se utilizó para representar composición, no para comparar ya que el gráfico de tarta no
+        está diseñado para ello. Así se puede ver de un vistazo los partidos políticos más destacables que hay en esa
+        comunidad autónoma con su porcentaje en número de votos. Como vimos en clase, ni el área, ni el ángulo son
+        buenas medidas para comparar que fuerzas políticas están equilibradas, empatadas o las minorías. En cambio, está
+        visualización carece de iteración ya que sobre este están enlazados los datos del mapa. Por otro lado, en
+        aquellas provincias con más reparto de votos entre partidos como puede ser Barcelona o Madrid, no es atractiva
+        la visualización e incluso es difícil de interpretar.
+      </p>
+      <p style="text-align: justify;">
+        Sobre los colores que se han aplicado en estos diagramas son los colores representativos de los partidos
+        políticos ya que es una variable cualitativa la que se quiere reflejar en la representación. Se sigue el
+        criterio de asociación para que la audiencia no tenga ambigüedad en distinguirlos. Así se puede asociar el color
+        al partido político o a una determinada ideología sin necesidad de entrar en explicaciones. También resaltar que
+        se coge una gama cromática más pastel para que no sea agresiva a la vista y que dificulte la interpretación de
+        los datos en la visualización.
+      </p>
+
+      <div aria-orientation="horizontal">
+        <div >
+          <h3 align="center">Mapa Coroplético</h3>
+        </div>
+        <div id="histograma" style="margin: auto;"></div>
+        <div >
+          <h3 align="center">Diagrama de Sectores</h3>
+        </div>
+        <div id="sector" style="margin: auto;"></div>
+        <div style="width: 1110px; margin: auto; display:flex; align-items: center; justify-content: center;">
+          <div style="width: 450px; text-align: center; font-family: sans-serif">
+              <div class="header-center" id="provincia">
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6 col-lg-4 col-xl-3" id="box_left">
+                    <table class="table table-sm table-map" id="table">
+                      <tbody id="tboody">
+                          <tr><th class="participacion" >Nº Votantes</th><td class="table-right" id="votantes"> 0</td></tr>
+                          <tr><th class="participacion" >Nº Escaños</th><td class="table-right" id="escanios"> 0</td></tr>
+                          <tr><th class="participacion" style="width: fit-content">Nº Personas/Escaños</th><td class="table-right" id="num_per_esc"> 0</td></tr>
+                          <tr><th class="participacion" >Persona/Escaños</th><td class="table-right" id="per_esc"> 0</td></tr>
+                      </tbody>
+                    </table>
+                </div>
+              </br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      <p style="text-align: justify;">
+        Por otro lado, no distorsiona los datos, es una de las principales ventajas al utilizar esta técnica. Puede
+        tener efectos negativos como la posición del foco de la atención del usuario ya que aparecen varios. Te ubica en
+        el mapa de España, pero no sabes lo que tienes alrededor. No te pone en un contexto donde tu puedas navegar.
+        Aparte, el objetivo principal es ver el prorrateo que existe entre las diferentes provincias, se agregó una
+        tabla que refleja esa información, pero no se puede realizar ninguna comparación. En está tabla se puede ver el
+        número de votantes, el número escaños, el número de personas por escaño y el valor del voto del ciudadano por
+        ese escaño. Además de un resumen del reparto de los votos que lo refleja de forma gráfica la segunda
+        visualización. En la siguiente sección se utilizarán gráficos comparativos con los datos de la tabla para
+        reflejar el alcance del estudio.
+      </p>
+      <p style="text-align: justify;">
+        Las visualizaciones realizadas en esta sección sirven para ver un análisis exploratorio de las ideologías
+        políticas y las tendencias que existen en los diferentes territorios de España, como está repartido el voto y
+        los datos concretos de cada provincia. Como punto negativo carece la posibilidad de realizar comparaciones entre
+        estas.
+      </p>
+      <h2>Desarrollo en Tableu</h2>
+      <p style="text-align: justify;">
+        En esta sección se desarrolla diferentes visualizaciones con la herramienta Tableu. Se seleccionó está
+        tecnología ya que permite realizar visualizaciones con cuadros de mando y se aprovechó la licencia obtenida como
+        estudiante. En el trabajo sí que se realizó una visualización con diferentes gráficos, pero no llega a la
+        complejidad de la creación de un dashboard real. Además, su curva de aprendizaje es muy pequeña por lo que
+        rápidamente puedes aprender y crear visualizaciones de forma muy rápida y profesional.
+      </p>
+      <p style="text-align: justify;">
+        Al partir de las visualizaciones del apartado anterior se llegó a la necesidad de realizar una comparativa con
+        los datos de la tabla que cambiaban de forma dinámica. Esta comparativa se logra al utilizar un diagrama de
+        barras como el que se muestra a continuación:
+      </p>
+      <div style="height:1200px">
+        <div class='tableauPlaceholder' id='viz1619346968101' style='position: relative'><noscript><a
+              href='#'><img alt='Nº de Escaños por provincia ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Vi&#47;VisualizacionViu&#47;NdeEscaosporprovincia&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='views&#47;VisualizacionViu&#47;NdeEscaosporprovincia?:language=es&amp;:embed=y&amp;:display_count=y&amp;publish=yes' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Vi&#47;VisualizacionViu&#47;NdeEscaosporprovincia&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es' /><param name='filter' value='publish=yes' /></object>
+        </div>
+        <script type='text/javascript'>
+          var divElement = document.getElementById('viz1619346968101');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height='100%';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+        </script>
+      </div>
+
+      <p style="text-align: justify;">
+        El gráfico representa tres dimensiones, las diferentes provincias, el número escaños de cada provincia y el
+        color. El color en este caso es muy importante ya que refleja la variable cuantitativa del peso de persona por
+        escaño. Cuanto más oscura sea el tono, más valor tiene el voto de esa persona que el que tiene un tono más
+        claro. Además, se puede ver que esta ordenado de forma descendente por el número de escaños. Así se puede
+        observar, que ciudades más grandes, el peso del voto del ciudadano es mucho menor que en ciudades más pequeñas
+        como Soria o Teruel. Este desajuste se realiza para que esas provincias tengan un peso en la formación del
+        gobierno y no sea solo el voto del ciudadano por individual. Lo que haría que con el voto de las grandes
+        ciudades tuvieran el peso absoluto sobre la política del país. Estos análisis son utilizados por los diferentes
+        partidos políticos para saber que nichos son más importantes para sus campañas y que audiencia van a tener.
+      </p>
+      <p style="text-align: justify;">
+        A continuación, se diseñan otros dos gráficos, en este caso de burbujas para ver la relación por tamaño del peso
+        del voto por provincia y el número de escaños por provincia. No son gráficos donde se pueda comparar los
+        valores, ni mostrar jerarquía, se busca una vista general a través de la primera impresión del usuario y que
+        ayude a interpretar de mejor manera el primer gráfico. El problema del primer gráfico es la amplia información
+        que tiene, que puede ser muy densa para interpretarla una persona, por eso se diseñan estos dos gráficos
+        auxiliares que ayuda a interpretar los datos que se muestran.
+      </p>
+      <p style="text-align: justify;">
+        La primera visualización es el número de votos por provincia, en el que el tamaño de las burbujas está
+        determinado por el número de votos. El color en este caso representa el número de escaños que puede llegar a
+        tener una provincia. No es un número elevado de colores, pero sí que puede dificultar la interpretabilidad del
+        gráfico. Aun así, queda más aclarativo que usar solo una gama cromática con diferentes tonos, aunque la teoría
+        nos diga lo contrario. Porque de esta forma se puede aplicar la propiedad de semejanza de forma más sencilla y
+        poder ver que provincias tienen los mismos escaños. Se puede ver que, contra menos escaños, más en el centro se
+        encuentra y al revés contra más escaños más en la periferia del gráfico.
+      </p>
+
+      <div style="height:550px">
+        <div class='tableauPlaceholder' id='viz1619347161426' style='position: relative'><noscript><a
+              href='#'><img alt='Nº de Votos por provincias ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;NV&#47;NVotosProvincia&#47;NdeVotosporprovincias&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='NVotosProvincia&#47;NdeVotosporprovincias' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;NV&#47;NVotosProvincia&#47;NdeVotosporprovincias&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es' /><param name='filter' value='publish=yes' /></object>
+        </div>
+        <script type='text/javascript'>
+          var divElement = document.getElementById('viz1619347161426');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height='100%';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+        </script>
+      </div>
+
+
+      <p style="text-align: justify;">
+        La otra visualización sigue el mismo esquema que la anterior, pero en este caso refleja el peso del votante por
+        provincia. Está variable cualitativa se toma como tamaño de las burbujas. El color sigue siendo el número de
+        escaños. En este caso se ordena de diferente manera, las provincias con mayor peso se encuentran en el centro y
+        las que tiene menor peso en el exterior. En el interior de las burbujas tiene los labels que reflejan el número
+        de escaños y el nombre de la provincia como en la visualización anterior.
+      </p>
+
+      <!-- <div style="height:550px"> -->
+      <div class='tableauPlaceholder' id='viz1619348102047' style='position: relative'><noscript><a
+            href='#'><img alt='Peso del voto por provincia ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pe&#47;PesoVotosProvincia&#47;Pesodelvotoporprovincia&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='PesoVotosProvincia&#47;Pesodelvotoporprovincia' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pe&#47;PesoVotosProvincia&#47;Pesodelvotoporprovincia&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es' /><param name='filter' value='publish=yes' /></object>
+      </div>
+      <script type='text/javascript'>
+        var divElement = document.getElementById('viz1619348102047');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+      </script>
+      <!-- </div> -->
+
+
+      <p style="text-align: justify;">
+        Aunque no se haya mencionado hasta ahora, los tres gráficos son iterativas ya que utilizan el brushing para
+        mostrar información cuando se posiciona el ratón sobre esté. En los tres casos muestra la misma información, el
+        nombre de la provincia, el número de escaños y el peso que tiene el voto. Está información se muestra por una
+        ventana emergente donde muestra esa información.
+      </p>
+      <p style="text-align: justify;">
+        A continuación, se muestra un dashboard con los tres gráficos juntos. Es verdad que la información que transmite
+        es semejante entre las visualizaciones, pero son diferentes formas de transmitir esa información al usuario
+        final. Se añade como filtro el gráfico de barras que muestra el número de escaños por provincia, muy útil cuando
+        se seleccionan varias provincias y poder ver los tamaños de las burbujas en los otros gráficos. Además, se
+        agregan diferentes filtros a mano derecha con lo que poder modificar que contenido mostrar sobre la
+        visualización. Estás iteraciones son muy interesantes añadirlas a las visualizaciones ya que ayuda a que el
+        usuario pueda manejar de cierta manera los datos y poder alcanzar el conocimiento que se desea.
+      </p>
+
+      <!-- <div> -->
+      <div class='tableauPlaceholder' id='viz1619347646269' style='position: relative'><noscript><a
+            href='#'><img alt='Dashboard 2 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;DashboardVisualizacionViu&#47;Dashboard2&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='DashboardVisualizacionViu&#47;Dashboard2' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;DashboardVisualizacionViu&#47;Dashboard2&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es' /><param name='filter' value='publish=yes' /></object>
+      </div>
+      <script type='text/javascript'>
+        var divElement = document.getElementById('viz1619347646269');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else { vizElement.style.width='100%';vizElement.style.height='1377px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+      </script>
+      <!--</div> -->
+
+
+      <h2>Conclusiones</h2>
+      <p style="text-align: justify;">
+        A lo largo del trabajo se han utilizado dos herramientas D3 y Tablue de las cuales Tableu prevalece por la
+        agilidad y las posibilidades que abarca sus características. Al diseñar estas visualizaciones se pretendía
+        transmitir de forma visual como realmente funciona el sistema de elecciones de nuestro país y como se
+        distribuyen estos datos. Las primeras visualizaciones son un análisis exploratorio de los resultados de dichas
+        elecciones, con los partidos políticos distribuidos por en un mapa y el detalle de este. Pero no reflejaba de
+        forma directa la comparativa que se quería hacer por lo que se realizaron otras visualizaciones como un simple
+        diagrama de barras donde muestra con detalle la comparativa deseada.
+      </p>
+      <p style="text-align: justify;">
+        Se debe concluir que, aunque el sistema español tenga un alto prorrateo, en la visualización que muestra el peso
+        del voto por habitante no es una diferencia muy notoria. Pero si es alarmante como se mencionó al principio que
+        seamos uno de los mayores países con prorrateo de la unión europea. El sistema perfecto no existe ya que, si el
+        voto de cada ciudadano contase por igual, solo beneficiaría aquellas ciudades con mayor habitantes, olvidando
+        ciudades más pequeñas y marcando mayor desigualdad.
+      </p>
+      <p style="text-align: justify;">
+        Este sistema de elección de escaños también puede ser beneficioso desde el punto de vista político. Se pueden
+        desarrollar campañas que se centren en grupos de personas donde mayor tasa de votantes pueda tener y donde el
+        peso del voto sea mayor. Lo que provoca que tenga mayor posibilidades de obtener más escaños en las elecciones.
+      </p>
+      <p style="text-align: justify;">
+        Como conclusión, todo sistema tiene sus ventajas y sus desventajas. Se deben de tener en cuenta a la hora de
+        analizar los resultados en los que llega las elecciones y como formaciones políticas llegan al poder, se unen o
+        desaparecen con el paso del tiempo.
+      </p>
     </div>
   </div>
 
-
-  <h2>Introducción</h2>
-  <p>
-    Un buen análisis visual permite aplicar diferentes técnicas de visualización que se implementan en las máquinas para
-    que se pueda interpretar los datos. En concreto una visualización se puede utilizar para transformar datos en
-    información. Esta información sera captada por los sentidos por lo que entran en juego las capacidades cognitivas
-    para poder interpretar esa información.
-  </p>
-  <p>
-    Una de las piezas clave para una buena visualización es la interpretación clara de los datos, es decir, poder
-    mostrarlos de manera sencilla. Por eso surge la necesidad de procesar los datos a través del insight. Un concepto
-    que se basa en la extracción adicional de los datos que de por si solo no se muestran. Se debe de conseguir
-    convertir esos datos en información valiosa para el usuario. Esa conversión es en lo que se basa está práctica, la
-    utilización de técnicas de visualización.
-  </p>
-  <p>
-    En concreto se va a realizar una visualización basada las elecciones del 10 de noviembre del 2019 en España. El
-    principal objetivo es mejorar la información que se muestra en este tipo de datos para poder entender de manera
-    clara los resultados que se obtuvieron. Muchas veces por falta de tiempo o por desconocimiento, no se sabe el
-    funcionamiento del reparto de escaños en nuestro país. Uno de los pilares fundamentales de la democracia ya que a
-    partir de ahí se forma el gobierno que va a dirigir el país. El modelo que sigue España para la asignación de votos
-    y escaños se basa en el modelo de circunscripciones provinciales basada en la Ley d´Hondt. No se basa en el modelo
-    de población única en el que cada voto cuenta por igual para que no haya infrarrepresentación de las zonas rurales.
-    Nuestro sistema electoral tiene dos sesgos bien diferenciados, el mayoritario llevado por la magnitud de distrito y
-    el conservador llevado por el prorrateo y la varianza de escaños.
-  </p>
-  <p>
-    La Ley Orgánica del Régimen Electoral General (LOREG), aprobada en 1985 bajo el mandato de Felipe González,
-    establece que el congreso tendrá 350 diputados. Los escaños se reparten en base a la división de España en 52
-    circunscripciones contando con las ciudades autónomas de Ceuta y Melilla. Pero está ley trae consigo un desajuste
-    entre el número de escaños y la población que lo integra. Este fenómeno se llama desviación del prorrateo. Se tiene
-    un mínimo de dos escaños por provincia, excepto Ceuta y Melilla que tienen 1. Los escaños fijos son 102 y 248 son
-    los escaños que varían con la población de los distritos. Esto causa que en España se tenga la mayor desviación en
-    el prorrateo de Europa con la excepción de Islandia.
-  </p>
-  <p>
-    Una vez introducido los conceptos básicos del sistema de reparto de escaños se habla de las personas a la que va
-    dirigida. El problema de la visualización de los resultados de las elecciones está resuelto. Pero este estudio se
-    centra en visualizar el prorrateo que causa el reparto de escaños en España. Se tienen los datos de las elecciones y
-    las diferentes leyes que se aplican. Se desarrolla una visualización para transformar esos datos en información
-    donde el usuario pueda interpretar de forma más sencilla. Para ello se desarrollará un mapa de las provincias de
-    España con diferentes datos de las elecciones que tendrá una serie de iteraciones y una leyenda explicativa. Aparte,
-    se realizó otras visualizaciones de apoyo ya que la visualización inicial no alcanza el objetivo.
-  </p>
-  <h2>¿Dónde se aplica?</h2>
-  <h2>Base de datos con la que se trabaja</h2>
-  <h2>Análisis de la base de datos</h2>
-  <h2>Tecnologías y técnicas utilizadas</h2>
-  <h2>Visualizaciones</h2>
-  <h2>Conclusiones</h2>
+  <script type="text/javascript" src="mapa.js"></script>
 </body>
 
 </html>
