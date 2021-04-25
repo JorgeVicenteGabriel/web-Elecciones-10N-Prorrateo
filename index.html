@@ -17,18 +17,15 @@
 </head>
 
 <body>
-  <div style="display: flex; justify-content:center;">
-    <h1>Visualización de Datos</h1>
-  </div>
-  <div style="display: flex; justify-content:center;">
-    <p><b>Elecciones del 10 N del 2019 sobre el prorrateo en el reparto de escaños</b></p>
-  </div>
-
-
-
-
   <div style="width:100%; display: flex; display: flex; justify-content: center; align-items: center">
     <div style=" width: 1000px; margin:0;">
+      <div style="display: flex; justify-content:center;">
+        <h1>Visualización de Datos</h1>
+      </div>
+      <div style="display: flex; justify-content:center;">
+        <p><b>Elecciones del 10 N del 2019 sobre el prorrateo en el reparto de escaños</b></p>
+      </div>
+
       <div style="display: flex; justify-content:center; flex-direction:column; margin:0px;">
         Alumno: Jorge Vicente Gabriel
         <div>
@@ -93,7 +90,7 @@
       </p>
       <p style="text-align: justify;">
         Las visualizaciones que se van a realizar será un mapa y un gráfico de sectores a través de la herramienta D3 y
-        diferentes gráficos con la herramienta Tableu que alivie las carencias de los anteriores gráficos. En las
+        diferentes gráficos con la herramienta tableau que alivie las carencias de los anteriores gráficos. En las
         siguientes secciones se entra más en detalle de la elección de las herramientas y los gráficos.
       </p>
       <h2>Base de datos con la que se trabaja</h2>
@@ -150,34 +147,46 @@
       </p>
 
       <div aria-orientation="horizontal">
-        <div >
+        <div>
           <h3 align="center">Mapa Coroplético</h3>
         </div>
         <div id="histograma" style="margin: auto;"></div>
-        <div >
+        <div>
           <h3 align="center">Diagrama de Sectores</h3>
         </div>
         <div id="sector" style="margin: auto;"></div>
         <div style="width: 1110px; margin: auto; display:flex; align-items: center; justify-content: center;">
           <div style="width: 450px; text-align: center; font-family: sans-serif">
-              <div class="header-center" id="provincia">
+            <div class="header-center" id="provincia">
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-6 col-lg-4 col-xl-3" id="box_left">
+                <table class="table table-sm table-map" id="table">
+                  <tbody id="tboody">
+                    <tr>
+                      <th class="participacion">Nº Votantes</th>
+                      <td class="table-right" id="votantes"> 0</td>
+                    </tr>
+                    <tr>
+                      <th class="participacion">Nº Escaños</th>
+                      <td class="table-right" id="escanios"> 0</td>
+                    </tr>
+                    <tr>
+                      <th class="participacion" style="width: fit-content">Nº Personas/Escaños</th>
+                      <td class="table-right" id="num_per_esc"> 0</td>
+                    </tr>
+                    <tr>
+                      <th class="participacion">Persona/Escaños</th>
+                      <td class="table-right" id="per_esc"> 0</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="row justify-content-center">
-                <div class="col-6 col-lg-4 col-xl-3" id="box_left">
-                    <table class="table table-sm table-map" id="table">
-                      <tbody id="tboody">
-                          <tr><th class="participacion" >Nº Votantes</th><td class="table-right" id="votantes"> 0</td></tr>
-                          <tr><th class="participacion" >Nº Escaños</th><td class="table-right" id="escanios"> 0</td></tr>
-                          <tr><th class="participacion" style="width: fit-content">Nº Personas/Escaños</th><td class="table-right" id="num_per_esc"> 0</td></tr>
-                          <tr><th class="participacion" >Persona/Escaños</th><td class="table-right" id="per_esc"> 0</td></tr>
-                      </tbody>
-                    </table>
-                </div>
               </br>
-              </div>
             </div>
           </div>
         </div>
+      </div>
 
 
       <p style="text-align: justify;">
@@ -197,9 +206,9 @@
         los datos concretos de cada provincia. Como punto negativo carece la posibilidad de realizar comparaciones entre
         estas.
       </p>
-      <h2>Desarrollo en Tableu</h2>
+      <h2>Desarrollo en Tableau</h2>
       <p style="text-align: justify;">
-        En esta sección se desarrolla diferentes visualizaciones con la herramienta Tableu. Se seleccionó está
+        En esta sección se desarrolla diferentes visualizaciones con la herramienta tableau. Se seleccionó está
         tecnología ya que permite realizar visualizaciones con cuadros de mando y se aprovechó la licencia obtenida como
         estudiante. En el trabajo sí que se realizó una visualización con diferentes gráficos, pero no llega a la
         complejidad de la creación de un dashboard real. Además, su curva de aprendizaje es muy pequeña por lo que
@@ -304,7 +313,7 @@
 
       <h2>Conclusiones</h2>
       <p style="text-align: justify;">
-        A lo largo del trabajo se han utilizado dos herramientas D3 y Tablue de las cuales Tableu prevalece por la
+        A lo largo del trabajo se han utilizado dos herramientas D3 y Tablue de las cuales tableau prevalece por la
         agilidad y las posibilidades que abarca sus características. Al diseñar estas visualizaciones se pretendía
         transmitir de forma visual como realmente funciona el sistema de elecciones de nuestro país y como se
         distribuyen estos datos. Las primeras visualizaciones son un análisis exploratorio de los resultados de dichas
@@ -329,6 +338,42 @@
         analizar los resultados en los que llega las elecciones y como formaciones políticas llegan al poder, se unen o
         desaparecen con el paso del tiempo.
       </p>
+      <h2>Referencias</h2>
+      <ol>
+        <li>
+          <span >Congreso</span>,
+          <span >Compos - Congreso de los Diputados</span>,
+          <span ><a href="https://www.congreso.es/grupos/composicion-en-la-legislatura">https://www.congreso.es/grupos/composicion-en-la-legislatura</a></span>,
+          <span >(última versión el 25 de marzo de 2021)</span>
+        </li>
+        <li>
+          <span >D3 js</span>,
+          <span >D3.js - Data-Drin Documents</span>,
+          <span ><a href="https://d3js.org/">https://d3js.org/</a></span>,
+          <span >(última versión el 25 de marzo de 2021)</span>
+        </li>
+        <li>
+          <span >Tableau</span>,
+          <span >GetStarted - Tableau</span>,
+          <span ><a href="https://help.tableau.com/current/pro/desktop/en-us/gettingstarted_overview.htm">https://help.tableau.com/current/pro/desktop/en-us/gettingstarted_overview.htm</a></span>,
+          <span >(última versión el 25 de marzo de 2021)</span>
+        </li>
+        <li>
+          <span >Cole Nussbaumer Knaflic</span>,
+          <span >Storytelling con datos(2017)</span>
+        </li>
+        <li>
+          <span >Miriam Butt &Dominik Sach - Visualization Theory</span>,
+          <span ><a href="http://ling.uni-konstanz.de/pages/home/butt/main/material/lingvis/VisTheory_v1_online.pdf">http://ling.uni-konstanz.de/pages/home/butt/main/material/lingvis/VisTheory_v1_online.pdf</a></span>,
+          <span >(última versión el 25 de marzo de 2021)</span>
+        </li>
+        <li>
+          <span >Christopher G. Healey - Perception in Visualization - Department of
+Computer Science, North Carolina State University</span>,
+          <span ><a href="https://www.csc2.ncsu.edu/faculty/healey/PP/">https://www.csc2.ncsu.edu/faculty/healey/PP/</a></span>,
+          <span >(última versión el 25 de marzo de 2021)</span>
+        </li>
+      </ol>
     </div>
   </div>
 
